@@ -113,7 +113,7 @@ function collection_complete_now_emit() {
 
   {// Label block
     console.log(labelBlockHeader); // This is up to the start of the LHS data
-    for (var i=1; i<inbound.length;i++) {
+    for (var i=0; i<inbound.length;i++) {
         console.log('<a href="'+ inbound[i].from +
                     '.html" class="list-group-item"> ' + inbound[i].from+ 
                     ' <span class="badge">' + inbound[i].count + '</span></a>');
@@ -121,7 +121,7 @@ function collection_complete_now_emit() {
     console.log(labelCloseFromColumnOpenNameColumn);
     console.log(centreName);
     console.log(labelCloseNameColumnOpenToColumn);
-    for (var i=1; i<outbound.length;i++) {
+    for (var i=0; i<outbound.length;i++) {
         console.log('<a href="'+ outbound[i].to +
                     '.html" class="list-group-item"> ' + outbound[i].to+ 
                     ' <span class="badge">' + outbound[i].count + '</span></a>');
@@ -132,12 +132,12 @@ function collection_complete_now_emit() {
     
   { // Sankey block
       console.log(sankeyOpen);
-      for (var i=1;i<inbound.length;i++){
+      for (var i=0;i<inbound.length;i++){
           console.log('[\'from '+ inbound[i].from +'\', \'' +
                      centreName + '\',' +
                      inbound[i].count + '],');
       }
-      for (var i=1;i<outbound.length;i++){
+      for (var i=0;i<outbound.length;i++){
           console.log('[\'' + centreName + '\',' +
                       '\'to '+ outbound[i].to +'\','+
                      outbound[i].count + '],');
