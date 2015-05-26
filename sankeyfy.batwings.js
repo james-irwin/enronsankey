@@ -82,7 +82,7 @@ chart.draw(data, options);\
 </script>\
 </div>\
 \
-<div id=\'thechart\' style=\'width: 860px; height: 300px;\'></div>\
+<div id=\'thechart\' style=\'width: 860px; height: 700px;\'></div>\
 </div>\
 ';
 
@@ -96,11 +96,96 @@ chart.draw(data, options);\
 
 
 var countingCallbacks=0;
-var targetCountingCallbacks=2; // Inbound + outbouns.
-var centreName=process.argv[2].replace(/\'/g,"");
+var targetCountingCallbacks=2; // Inbound + outbound.
+var centreName=process.argv[2];
 var inbound=[];
 var outbound=[];
+var batwingFingers=[]; // Left & right batwing fingers
+var batwingCallbacks=0;
+var targetBatwingCallbacks=0; // Set after finding the length of inbound + outbound.
 
+function batfinger_collection_complete_now_emit(){
+    batwingCallbacks++;
+    //console.log(batwingCallbacks + '/' + targetBatwingCallbacks);
+    if (targetBatwingCallbacks!=batwingCallbacks)
+        return;
+    // Drop out all of the batwing things ...
+    //console.log(JSON.stringify(batwingFingers));
+    for (var i=0;i<batwingFingers.length;i++)
+    {
+        console.log('[\''+ batwingFingers[i].from.replace(/\'/g,"") +
+                    '\', \'' + batwingFingers[i].to.replace(/\'/g,"") +
+                    '\', '+ batwingFingers[i].count +
+                    '],'
+                   );
+    }  
+        
+    console.log(sankeyClose);
+    console.log(pageFooter);
+}
+
+function collectAggregates(direction, who, stash){
+    var postData = JSON.stringify({
+        "size": 0,
+        "aggs": {
+                "from": {
+                    "terms": {"field": direction}
+                }
+            }
+        });
+    var fullpath;
+    if (direction=='from')
+        fullpath='/enron/_search?q=to:'+who;
+    else
+        fullpath='/enron/_search?q=from:'+who;
+    
+    var options = {
+        hostname: 'localhost',
+        port: 9200,
+        path: fullpath,
+        method: 'POST',
+        headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': postData.length
+                }
+};
+    var http=require('http');
+    var req = http.request(options, function(res) {
+        var data='';
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            data=data+chunk; });
+
+        res.on('end', function () {
+
+            var buckets=JSON.parse(data).aggregations.from.buckets;
+            for (var bucket=1;bucket<buckets.length;bucket++) {
+                var strlen=buckets[bucket].key.length;
+                var tail=buckets[bucket].key.substring(strlen-4, strlen);
+                if (tail!='.com')
+                {
+                    if (direction=='to')
+                        stash.push({'from' :'from:from '+buckets[bucket].key,
+                                    'to'   : 'from '+who,
+                                    'count':buckets[bucket].doc_count});
+                    else
+                        stash.push({'from' : 'to '+who,
+                                    'to'   : 'to:to '+buckets[bucket].key,
+                                    'count':buckets[bucket].doc_count});
+                }
+            }
+            batfinger_collection_complete_now_emit();
+        });
+    });
+
+    req.on('error', function(e) {
+        console.log('problem with request: ' + e.message);
+    });
+
+    // write (post) data to request body
+    req.write(postData);
+    req.end();    
+}
 
 function collection_complete_now_emit() {
     countingCallbacks++;
@@ -119,7 +204,7 @@ function collection_complete_now_emit() {
                     ' <span class="badge">' + inbound[i].count + '</span></a>');
     }
     console.log(labelCloseFromColumnOpenNameColumn);
-    console.log('<a href="'+centreName+'.batwings.html">'+centreName+'</a>');
+    console.log('<a href="'+centreName+'.html">'+centreName+'</a>');
     console.log(labelCloseNameColumnOpenToColumn);
     for (var i=0; i<outbound.length;i++) {
         console.log('<a href="'+ outbound[i].to.replace(/\'/g,"") +
@@ -132,22 +217,23 @@ function collection_complete_now_emit() {
     
   { // Sankey block
       console.log(sankeyOpen);
+      targetBatwingCallbacks=inbound.length+outbound.length;
+      //console.log('in:'+inbound.length + '/out:'+outbound.length);
       for (var i=0;i<inbound.length;i++){
           console.log('[\'from '+ inbound[i].from.replace(/\'/g,"") +'\', \'' +
-                     centreName + '\',' +
+                     centreName.replace(/\'/g,"") + '\',' +
                      inbound[i].count + '],');
+          collectAggregates('to', inbound[i].from.replace(/\'/g,""), batwingFingers);
       }
+      
       for (var i=0;i<outbound.length;i++){
-          console.log('[\'' + centreName + '\',' +
+          console.log('[\'' + centreName.replace(/\'/g,"") + '\',' +
                       '\'to '+ outbound[i].to.replace(/\'/g,"") +'\','+
                      outbound[i].count + '],');
+          collectAggregates('from', outbound[i].to.replace(/\'/g,""), batwingFingers);
       }
-      console.log(sankeyClose);
   } // Sankey block
-    
-    console.log(pageFooter);
 }
-
 
 function collectInbound() {
     var postData = JSON.stringify({
