@@ -29,36 +29,199 @@
   ga(\'send\', \'pageview\');\
 \
 </script>\
+<style>\
+@import url(\'http://fonts.googleapis.com/css?family=Noto+Sans:400,700\');\
+\
+*{\
+  margin: 0;\
+  padding: 0;\
+}\
+h1{\
+  width: 500px;\
+  height: 100px;\
+  position: absolute;\
+  top: 35%;\
+  left: 50%;\
+  margin: -100px 0 0 -275px;\
+  font-size: 3.2em;\
+  font-weight: 700;\
+  text-align: center;\
+  line-height: 100px;\
+  color: #aaa;\
+}\
+\
+h2{\
+  width: 500px;\
+  height: 100px;\
+  position: absolute;\
+  top: 50%;\
+  left: 50%;\
+  margin: 0 0 0 -225px;\
+  font-size: 1.6em;\
+  font-weight: 400;\
+  text-align: center;\
+  line-height: 100%;\
+  color: #bbb;\
+}\
+\
+body{\
+  background: #f0f0f0;\
+  font-family: \'Noto Sans\', sans-serif;\
+}\
+\
+.vspace{\
+margin-bottom: 350px;\
+}\
+.corner-ribbon{\
+  width: 200px;\
+  background: #e43;\
+  position: absolute;\
+  top: 25px;\
+  left: -5px;\
+  text-align: right;\
+  line-height: 30px;\
+  letter-spacing: 1px;\
+  color: #f0f0f0;\
+}\
+\
+.corner-ribbon.sticky{\
+  position: absolute;\
+}\
+\
+.corner-ribbon.shadow{\
+  box-shadow: 0 0 3px rgba(0,0,0,.3);\
+}\
+\
+.corner-ribbon.top-left-1{\
+  top: 15px;\
+}\
+.corner-ribbon.top-left-2{\
+  top: 50px;\
+}\
+.corner-ribbon.top-left-3{\
+  top: 85px;\
+}\
+.corner-ribbon.top-left-4{\
+  top: 120px;\
+}\
+.corner-ribbon.top-left-5{\
+  top: 155px;\
+}\
+.corner-ribbon.top-left-6{\
+  top: 190px;\
+}\
+.corner-ribbon.top-left-7{\
+  top: 225px;\
+}\
+.corner-ribbon.top-left-8{\
+  top: 260px;\
+}\
+.corner-ribbon.top-left-9{\
+  top: 295px;\
+}\
+.corner-ribbon.top-left-10{\
+  top: 330px;\
+}\
+.corner-ribbon.top-right-1{\
+  top: 15px;\
+  right: -25px;\
+  left: auto;\
+  text-align: left;\
+}\
+.corner-ribbon.top-right-2{\
+  top: 50px;\
+  right: -25px;\
+  left: auto;\
+  text-align: left;\
+}\
+.corner-ribbon.top-right-3{\
+  top: 85px;\
+  right: -25px;\
+  left: auto;\
+  text-align: left;\
+}\
+.corner-ribbon.top-right-4{\
+  top: 120px;\
+  right: -25px;\
+  left: auto;\
+  text-align: left;\
+}\
+.corner-ribbon.top-right-5{\
+  top: 155px;\
+  right: -25px;\
+  left: auto;\
+  text-align: left;\
+}\
+.corner-ribbon.top-right-6{\
+  top: 190px;\
+  right: -25px;\
+  left: auto;\
+  text-align: left;\
+}\
+.corner-ribbon.top-right-7{\
+  top: 225px;\
+  right: -25px;\
+  left: auto;\
+  text-align: left;\
+}\
+.corner-ribbon.top-right-8{\
+  top: 260px;\
+  right: -25px;\
+  left: auto;\
+  text-align: left;\
+}\
+.corner-ribbon.top-right-9{\
+  top: 295px;\
+  right: -25px;\
+  left: auto;\
+  text-align: left;\
+}\
+.corner-ribbon.top-right-10{\
+  top: 330px;\
+  right: -25px;\
+  left: auto;\
+  text-align: left;\
+}\
+\
+.corner-ribbon.bottom-left{\
+  top: auto;\
+  bottom: 25px;\
+  left: -50px;\
+  transform: rotate(-45deg);\
+  -webkit-transform: rotate(-45deg);\
+}\
+\
+.corner-ribbon.bottom-right{\
+  top: auto;\
+  right: -50px;\
+  bottom: 25px;\
+  left: auto;\
+  transform: rotate(-45deg);\
+  -webkit-transform: rotate(-45deg);\
+}\
+\
+.corner-ribbon.white{background: #f0f0f0; color: #555;}\
+.corner-ribbon.black{background: #333;}\
+.corner-ribbon.grey{background: #999;}\
+.corner-ribbon.blue{background: #39d;}\
+.corner-ribbon.green{background: #2c7;}\
+.corner-ribbon.turquoise{background: #1b9;}\
+.corner-ribbon.purple{background: #95b;}\
+.corner-ribbon.red{background: #e43;}\
+.corner-ribbon.orange{background: #e82;}\
+.corner-ribbon.yellow{background: #ec0;}\
+</style>\
+\
   </head>\
 \
   <body role="document">\
 \
 <div class="container theme-showcase" role="main">\
-    <p></p>\
-<div class="row marketing">\
-<div class="col-lg-3">\
-<div class="btn-group-vertical" role="group" aria-label="...">\
-<div class="list-group">';
+    <p></p><div>';
+    labelCloseFromColumnOpenNameColumn='<h1>';
     
-    labelCloseFromColumnOpenNameColumn='</div>\
-</div>\
-</div>\
-\
-<div class="col-lg-3">\
-<div class="btn-group-vertical" role="group" aria-label="...">\
-<div class="page-header"><h1>';
-    
-    labelCloseNameColumnOpenToColumn='</h1></div>\
-</div>\
-</div>\
-\
-    <div class="col-lg-3">\
-<div class="btn-group-vertical" role="group" aria-label="...">\
-<div class="list-group">';
-    labelCloseToColumn='</div>\
-</div>\
-</div>\
-</div>';
+    labelCloseNameColumnOpenToColumn='</h1>';
+    labelCloseToColumn='</div><div class="vspace"> </div>';
     
     sankeyOpen='<div>\
       <script type=\'text/javascript\' src=\'https://www.google.com/jsapi\'></script>\
@@ -200,16 +363,21 @@ function collection_complete_now_emit() {
     console.log(labelBlockHeader); // This is up to the start of the LHS data
     for (var i=0; i<inbound.length;i++) {
         console.log('<a href="'+ inbound[i].from.replace(/\'/g,"") +
-                    '.html" class="list-group-item"> ' + inbound[i].from.replace(/\'/g,"")+ 
-                    ' <span class="badge">' + inbound[i].count + '</span></a>');
+                    '.batwings.html" class="corner-ribbon top-left-'+
+                    (i+1) +
+                    ' sticky green shadow"> ' + inbound[i].from.replace(/\'/g,"")+
+                    '</span></a>');
     }
     console.log(labelCloseFromColumnOpenNameColumn);
     console.log('<a href="'+centreName+'.html">'+centreName+'</a>');
     console.log(labelCloseNameColumnOpenToColumn);
     for (var i=0; i<outbound.length;i++) {
         console.log('<a href="'+ outbound[i].to.replace(/\'/g,"") +
-                    '.html" class="list-group-item"> ' + outbound[i].to.replace(/\'/g,"")+ 
-                    ' <span class="badge">' + outbound[i].count + '</span></a>');
+                    '.batwings.html" class="corner-ribbon top-right-'+
+                    (i+1) +
+                    ' sticky orange shadow"> ' +
+                    outbound[i].to.replace(/\'/g,"")+
+                    '</span></a>');
     }
     console.log(labelCloseToColumn);
       
